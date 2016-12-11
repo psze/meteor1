@@ -1,37 +1,49 @@
-<body>
+﻿<body>
+
    <div class="container">
+
     <header>
             
-<h1>Todo List ({{incompleteCount}})</h1>
+<h1>Список дел ({{incompleteCount}})</h1>
+
 
       <label class="hide-completed">
 
-        <input type="checkbox" />
 
-        Hide Completed Tasks
+        <input type="checkbox" /> 
+
+Спрятать выполненные
 
       </label>
+
  
 
-      {{> loginButtons}}
+      {{> loginButtons}}      {{#if currentUser}}
 
-      {{#if currentUser}}
  
       <form class="new-task">
 
-        <input type="text" name="text" placeholder="Type to add new tasks" />
+
+        <input type="text" name="text" placeholder="Добавить задачу" />
+
 
       </form>
+
 
       {{/if}}
 
     </header>
 
 
+
     <ul>
+
       {{#each tasks}}
+
         {{> task}}
+
       {{/each}}
+
     </ul>
      </div>
 </body>
