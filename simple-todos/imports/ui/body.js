@@ -1,37 +1,54 @@
 import { Meteor } from 'meteor/meteor';
+
 import { Template } from 'meteor/templating';
 
+
 import { ReactiveDict } from 'meteor/reactive-dict';
+
  
 import { Tasks } from '../api/tasks.js';
+
  
 import './task.js';
-import './body.html';
 
+import './body.html';
 
 Template.body.onCreated(function bodyOnCreated() {
 
+
   this.state = new ReactiveDict();
+
   Meteor.subscribe('tasks');
 
+
 });
+
  
 Template.body.helpers({ 
 tasks() {
+
  
 
     const instance = Template.instance();
 
+
     if (instance.state.get('hideCompleted')) {
 
 
-      return Tasks.find({ checked: { $ne: true } }, { sort: { createdAt: -1 } });
+
+      return Tasks.find({ checked: { $ne: true }
+ },
+ { sort: { createdAt: -1 } });
+
 
     }
-return Tasks.find({}, { sort: { createdAt: -1 } });
+return Tasks.find({},
+ { sort: { createdAt: -1 } });
  
 },
+
   incompleteCount() {
+
 
     return Tasks.find({ checked: { $ne: true } }).count();
 
@@ -41,26 +58,48 @@ return Tasks.find({}, { sort: { createdAt: -1 } });
 
 Template.body.events({
   'submit .new-task'(event) {
+
   
 
    event.preventDefault();
+
  
        const target = event.target;
+
     const text = target.text.value;
+
+    const info = target.info.value;
+
+    const date = target.date.value;
+
+
  
   
   
- Meteor.call('tasks.insert', text); 
+ Meteor.call('tasks.insert', text, info, date);
+ 
     
  
  target.text.value = '';
+ 
+    
+ 
+ target.info.value = '';
+ 
+    
+ 
+ target.date.value = '';
+
 
   },
 
 
+
   'change .hide-completed input'(event, instance) {
 
+
     instance.state.set('hideCompleted', event.target.checked);
+
 
   },
 });
